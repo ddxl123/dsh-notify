@@ -1,0 +1,16 @@
+# Minimal QQ Mail setup (also works for 163 / Gmail / Outlook — change `preset`).
+#
+# 1. Enable SMTP in your mailbox settings and generate an "authorization code"
+#    (QQ/163 reject your account password).
+# 2. Put the code in the environment, not in this file:
+#        export DSH_SMTP_PASSWORD='your-authorization-code'
+# 3. Merge this section into ~/.dsh/settings.yaml and save; it applies live.
+
+dsh-notify:
+  email:
+    enabled: true
+    preset: qq
+    user: you@qq.com
+    from: "DSH <you@qq.com>"
+    to:
+      - you@qq.com

@@ -1,0 +1,12 @@
+# The row this plugin adds to a profile's patch layer.
+# `node scripts/install.mjs --profile web` writes exactly this (idempotently).
+
+- insert:
+    - id: dsh-notify
+      name: dsh-notify
+      config:
+        enabled: true
+        alerts:
+          channels: [sound, desktop, email]
+          kinds:
+            subagent: { enabled: false }

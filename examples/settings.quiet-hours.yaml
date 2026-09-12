@@ -1,0 +1,12 @@
+# Night mode: silence sound and desktop banners between 23:00 and 07:00 while
+# email keeps flowing, so a 3 a.m. failure is waiting in your inbox.
+
+dsh-notify:
+  quietHours:
+    start: '23:00'
+    end: '07:00'
+  alerts:
+    kinds:
+      subagent: { enabled: false }   # child agents stay quiet
+  desktop:
+    sound: none                      # the sound channel already plays; avoid two tones

@@ -1,0 +1,24 @@
+# For long unattended jobs: every channel on, different tones per outcome, a
+# per-kind channel override for errors, and a digest-friendly dedupe window.
+
+dsh-notify:
+  enabled: true
+  sound:
+    perKind:
+      completed: Glass
+      question: Ping
+      error: Basso
+  desktop:
+    titlePrefix: "[dsh]"
+  alerts:
+    channels: [sound, desktop, email]
+    dedupeWindowMs: 120000      # collapse repeats within two minutes
+    errorCooldownMs: 1800000    # one alert per distinct failure per 30 minutes
+    kinds:
+      completed: { enabled: true }
+      question: { enabled: true }
+      approval: { enabled: true }
+      error: { enabled: true, channels: [sound, email] }  # skip the banner on failures
+      subagent: { enabled: false }
+  outbox:
+    flushOnStart: true

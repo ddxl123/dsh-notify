@@ -1,0 +1,70 @@
+{
+  "name": "dsh-notify",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness plugin: system-sound, desktop and email alerts when an agent finishes a task, errors, or needs your input",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "notification",
+    "notify",
+    "alert",
+    "smtp",
+    "email",
+    "sound"
+  ],
+  "license": "MIT",
+  "author": "long0521",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./lib/*": "./lib/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "examples",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "test": "node --test test/",
+    "test:setup": "node scripts/test-setup.mjs",
+    "test:alert": "node scripts/test-alert.mjs",
+    "install:profile": "node scripts/install.mjs",
+    "check": "node --check src/index.js && node --test test/"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-settings": "^0.1.5-rc.1",
+    "@deepseek-ai/dsh-tools": "^0.1.5-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-settings": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    },
+    "@deepseek-ai/schemastery": {
+      "optional": true
+    }
+  },
+  "dsh": {
+    "plugin": {
+      "title": "Desktop & email notifications",
+      "summary": "Alerts you on system sound, desktop notification and email when an agent finishes, fails, or asks a question."
+    }
+  }
+}

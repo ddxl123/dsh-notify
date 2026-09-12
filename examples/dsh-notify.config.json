@@ -1,0 +1,17 @@
+{
+  "sound": {
+    "perKind": {
+      "completed": "Glass",
+      "error": "Basso"
+    }
+  },
+  "desktop": {
+    "titlePrefix": "[dsh]"
+  },
+  "email": {
+    "preset": "sendgrid",
+    "user": "apikey",
+    "from": "dsh@example.com",
+    "to": ["you@example.com"]
+  }
+}

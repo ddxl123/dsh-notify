@@ -1,0 +1,10 @@
+# In-repo peer links created by `npm run test:setup` (they point at a local dsh install).
+test/node_modules/
+
+# Local runtime state and secrets.
+*.log
+outbox.json
+config.json
+.env
+.env.*
+!.env.example
