@@ -2,6 +2,10 @@
 
 简体中文 | [English](README.md)
 
+[![release](https://img.shields.io/github/v/release/ddxl123/dsh-notify-long?label=release&color=blue)](https://github.com/ddxl123/dsh-notify-long/releases)
+[![test](https://img.shields.io/badge/tests-82%20passing-brightgreen)](https://github.com/ddxl123/dsh-notify-long)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 给 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（`dsh`）装上一双"耳朵"和一部"电话"：**任务做完、出错、需要你回答问题时，用系统提示音、桌面横幅和邮件提醒你**，不用一直盯着终端。
 
 ```
@@ -39,6 +43,8 @@
 ## 安装
 
 前提：Node.js ≥ 20.11，已经能运行 `dsh`（本插件用的是 web profile，也就是你现在的界面）。
+
+> 当前版本通过 **GitHub 源码**分发（`v0.1.0`）；插件还没有发布到 npm，所以用下面的克隆方式安装。
 
 ```bash
 git clone https://github.com/ddxl123/dsh-notify-long.git

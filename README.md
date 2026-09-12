@@ -2,6 +2,10 @@
 
 [简体中文](README.zh.md) | English
 
+[![release](https://img.shields.io/github/v/release/ddxl123/dsh-notify-long?label=release&color=blue)](https://github.com/ddxl123/dsh-notify-long/releases)
+[![test](https://img.shields.io/badge/tests-82%20passing-brightgreen)](https://github.com/ddxl123/dsh-notify-long)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 Give [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`) an ear and a phone line: **when a task finishes, fails, or needs your answer, you get a system sound, a desktop banner, and an email** — no more babysitting the terminal.
 
 ```
@@ -35,6 +39,8 @@ approval needed →  🔔 sound + email  "Approval needed: bash"
 ## Install
 
 Requires Node.js ≥ 20.11 and a working `dsh` (this plugin targets the web profile — the GUI you are probably reading this in).
+
+> This release is distributed as **source on GitHub** (`v0.1.0`); the plugin is not published to npm, so install it by cloning as shown below.
 
 ```bash
 git clone https://github.com/ddxl123/dsh-notify-long.git
