@@ -53,15 +53,49 @@ async function optionalImport(specifier) {
   }
 }
 
-/** Composition entry defaults, declared as a schemastery schema when available. */
-export const Config = schemastery?.default === undefined ? defaultConfig : buildConfigSchema(schemastery.default)
+/**
+ * Composition entry schema.
+ *
+ * Cordis validates a row's `config` with `Config['~standard'].validate(...)`
+ * *before* `apply` runs, so whatever this module exports must be a Standard
+ * Schema or nothing at all. Two shapes were possible and only one is safe:
+ *
+ * - a real schema, when `@deepseek-ai/schemastery` resolves, so the harness gets
+ *   validation and the documented defaults;
+ * - `undefined`, when it does not, which makes Cordis skip config validation
+ *   entirely.
+ *
+ * A plain function is NOT a substitute. It has no `~standard`, so Cordis reads
+ * `Config['~standard'].validate` off `undefined` and the whole plugin tree fails
+ * to load — a degraded capability turning into a dead harness. `defaultsFor`
+ * still applies every default inside `apply`, so the plugin behaves identically
+ * either way; only validation is lost.
+ *
+ * Resolution is a peer-dependency question, not a code one: Node resolves a
+ * linked package's bare imports from its *real* path, so an out-of-tree plugin
+ * cannot see the harness's `profiles/node_modules` fallback unless the package
+ * is also resolvable from its own directory. Declaring the peer dependency (and
+ * installing it, or using a published one) is what makes the schema branch
+ * reachable.
+ */
+export const Config = resolveConfigSchema()
 
 /**
- * @param {any} value - raw composition entry
- * @returns {any} the entry with defaults applied
+ * Build the config schema, or `undefined` when no schema module is available.
+ *
+ * @returns {any} a Standard Schema, or undefined to let Cordis skip validation
  */
-function defaultConfig(value) {
-  return defaultsFor(value)
+function resolveConfigSchema() {
+  const z = schemastery?.default ?? schemastery?.z ?? schemastery
+  if (z === undefined || typeof z.object !== 'function') return undefined
+  try {
+    const schema = buildConfigSchema(z)
+    // Guard the exact contract Cordis reads, so a future shape change degrades to
+    // "no validation" instead of a load failure.
+    return typeof schema?.['~standard']?.validate === 'function' ? schema : undefined
+  } catch {
+    return undefined
+  }
 }
 
 /**
