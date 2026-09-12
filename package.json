@@ -15,6 +15,14 @@
     "sound"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddxl123/dsh-notify.git"
+  },
+  "homepage": "https://github.com/ddxl123/dsh-notify#readme",
+  "bugs": {
+    "url": "https://github.com/ddxl123/dsh-notify/issues"
+  },
   "author": "long0521",
   "type": "module",
   "main": "src/index.js",
