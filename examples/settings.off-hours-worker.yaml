@@ -1,7 +1,7 @@
 # For long unattended jobs: every channel on, different tones per outcome, a
 # per-kind channel override for errors, and a digest-friendly dedupe window.
 
-dsh-notify:
+dsh-notify-long:
   enabled: true
   sound:
     perKind:

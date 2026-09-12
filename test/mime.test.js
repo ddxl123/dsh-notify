@@ -92,9 +92,9 @@ test('buildMessage frames a multipart alternative when HTML is supplied', () => 
     html: '<p>html body</p>',
     kind: 'question',
   })
-  assert.match(message.raw, /^Content-Type: multipart\/alternative; boundary="dsh-notify-/m)
+  assert.match(message.raw, /^Content-Type: multipart\/alternative; boundary="dsh-notify-long-/m)
   assert.match(message.raw, /Content-Type: text\/html; charset=UTF-8/)
-  assert.match(message.raw, /\r\n--dsh-notify-[0-9a-z-]+--\r\n/)
+  assert.match(message.raw, /\r\n--dsh-notify-long-[0-9a-z-]+--\r\n/)
 })
 
 test('buildAlertMessage renders text and HTML and refuses unusable configuration', () => {

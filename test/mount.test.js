@@ -57,7 +57,7 @@ async function peersAvailable() {
 const bootTests = (await peersAvailable()) ? test : test.skip
 
 bootTests('apply() mounts against the real peer packages and registers its tools', async () => {
-  const home = tempDir('dsh-notify-home')
+  const home = tempDir('dsh-notify-long-home')
   process.env.DSH_HOME = home
   const settings = createFakeSettings()
   const harness = createFakeHarness({ services: { settings } })
@@ -71,7 +71,7 @@ bootTests('apply() mounts against the real peer packages and registers its tools
     debug: true,
   })
 
-  assert.equal(module.name, 'dsh-notify')
+  assert.equal(module.name, 'dsh-notify-long')
   assert.deepEqual(module.inject, ['agents', 'tools'])
   assert.notEqual(module.Config, undefined)
   for (const event of [
@@ -91,11 +91,11 @@ bootTests('apply() mounts against the real peer packages and registers its tools
   }
   assert.deepEqual(harness.toolNames().sort(), ['notify_flush', 'notify_status', 'notify_test', 'notify_user'])
   // The state directory is created on apply.
-  assert.equal(existsSync(join(home, 'dsh-notify')), true)
+  assert.equal(existsSync(join(home, 'dsh-notify-long')), true)
 })
 
 bootTests('a finished turn produces a completion alert through the real wiring', async () => {
-  const home = tempDir('dsh-notify-home')
+  const home = tempDir('dsh-notify-long-home')
   process.env.DSH_HOME = home
   const harness = createFakeHarness({
     services: { settings: createFakeSettings() },
@@ -131,7 +131,7 @@ bootTests('a finished turn produces a completion alert through the real wiring',
 
   // Nothing is left behind: the alert was attempted through the real wiring and
   // removed once every channel reported its failure.
-  const outboxPath = join(home, 'dsh-notify', 'outbox.json')
+  const outboxPath = join(home, 'dsh-notify-long', 'outbox.json')
   if (existsSync(outboxPath)) {
     const outbox = JSON.parse(readFileSync(outboxPath, 'utf8'))
     assert.equal(outbox.items.length, 0, 'no alert stays queued when all channels are disabled')
@@ -160,7 +160,7 @@ bootTests('a finished turn produces a completion alert through the real wiring',
 })
 
 bootTests('a failing turn leaves a queued record instead of losing the alert', async () => {
-  const home = tempDir('dsh-notify-home')
+  const home = tempDir('dsh-notify-long-home')
   process.env.DSH_HOME = home
   const harness = createFakeHarness({ services: { settings: createFakeSettings() } })
   await harness.mount({
@@ -177,7 +177,7 @@ bootTests('a failing turn leaves a queued record instead of losing the alert', a
   await harness.emit('agent/error', { agent: { id: 'session-def' }, turn: 1, step: 1, error: new Error('model route exploded') })
   await sleep(200)
 
-  const outbox = JSON.parse(readFileSync(join(home, 'dsh-notify', 'outbox.json'), 'utf8'))
+  const outbox = JSON.parse(readFileSync(join(home, 'dsh-notify-long', 'outbox.json'), 'utf8'))
   assert.equal(outbox.items.length, 1)
   assert.equal(outbox.items[0].kind, 'error')
   assert.match(outbox.items[0].body, /model route exploded/)
@@ -186,7 +186,7 @@ bootTests('a failing turn leaves a queued record instead of losing the alert', a
 })
 
 bootTests('notify_test reports each channel explicitly', async () => {
-  const home = tempDir('dsh-notify-home')
+  const home = tempDir('dsh-notify-long-home')
   process.env.DSH_HOME = home
   const harness = createFakeHarness({ services: { settings: createFakeSettings() } })
   await harness.mount({ sound: { enabled: false }, desktop: { enabled: false }, email: { enabled: false } })
@@ -282,7 +282,7 @@ test('the subagent opt-in is honoured by the runtime', async () => {
 })
 
 test('the engine keeps working when every channel is broken', async () => {
-  const home = tempDir('dsh-notify-home')
+  const home = tempDir('dsh-notify-long-home')
   const outbox = new Outbox({ path: join(home, 'outbox.json') })
   const engine = new Engine({
     outbox,

@@ -11,7 +11,7 @@
  *                              [--title "..."] [--message "..."] [--json]
  *
  * Configuration comes from the same layers the plugin uses: the environment
- * (DSH_SMTP_PASSWORD), plus optional JSON at $DSH_HOME/dsh-notify/config.json.
+ * (DSH_SMTP_PASSWORD), plus optional JSON at $DSH_HOME/dsh-notify-long/config.json.
  * The file is a flat object shaped like the plugin's own settings section:
  *
  *   { "email": { "preset": "qq", "user": "me@qq.com",
@@ -21,7 +21,7 @@
  * office365, icloud, zoho, yahoo, sendgrid, mailgun, resend or brevo, and fills
  * in host/port/transport for that provider.
  *
- * @module dsh-notify/scripts/test-alert
+ * @module dsh-notify-long/scripts/test-alert
  */
 
 import { existsSync, readFileSync } from 'node:fs'
@@ -36,7 +36,7 @@ import { deepMerge, sanitizeLine } from '../lib/util.js'
 
 /** @param {string[]} argv - process arguments @returns {Record<string, any>} parsed flags */
 function parseArgs(argv) {
-  const options = { kind: 'test', channel: 'all', title: 'dsh-notify test alert', message: 'Manual verification from the command line.', json: false }
+  const options = { kind: 'test', channel: 'all', title: 'dsh-notify-long test alert', message: 'Manual verification from the command line.', json: false }
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index]
     if (token === '--kind') options.kind = argv[index += 1]
@@ -53,7 +53,7 @@ function parseArgs(argv) {
 /** @returns {any} the configuration, merged from the optional file and the environment */
 function loadConfig() {
   const home = process.env.DSH_HOME ?? join(homedir(), '.dsh')
-  const file = join(home, 'dsh-notify', 'config.json')
+  const file = join(home, 'dsh-notify-long', 'config.json')
   const fromFile = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : {}
   const fromEnv = process.env.DSH_SMTP_HOST === undefined ? {} : {
     email: {

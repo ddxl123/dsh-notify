@@ -2,8 +2,8 @@
 # `node scripts/install.mjs --profile web` writes exactly this (idempotently).
 
 - insert:
-    - id: dsh-notify
-      name: dsh-notify
+    - id: dsh-notify-long
+      name: dsh-notify-long
       config:
         enabled: true
         alerts:

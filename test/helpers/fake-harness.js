@@ -6,7 +6,7 @@
  * plain Node test: subscribe the fake harness to the plugin, emit synthetic
  * harness events, and observe the alerts that come out.
  *
- * @module dsh-notify/test/helpers/fake-harness
+ * @module dsh-notify-long/test/helpers/fake-harness
  */
 
 /**
@@ -127,7 +127,7 @@ export function createFakeSettings(options = {}) {
   return {
     writable: true,
     installSection(_owner, namespace, _schema, base, hooks) {
-      if (namespace !== 'dsh-notify') throw new Error(`unexpected namespace ${namespace}`)
+      if (namespace !== 'dsh-notify-long') throw new Error(`unexpected namespace ${namespace}`)
       hooked = hooks
       source = () => ({ ...base, ...user })
       hooks.setSource(source)

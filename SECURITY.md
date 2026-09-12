@@ -14,7 +14,7 @@ not file a public issue for a credential leak.
   Keychain lookup), then a literal in the settings document.
 - `email.requireTls` defaults to `true`: the client refuses to authenticate over a cleartext
   link, and falls back to another submission port instead.
-- An alert record lives in `~/.dsh/dsh-notify/outbox.json` and contains only the notification
+- An alert record lives in `~/.dsh/dsh-notify-long/outbox.json` and contains only the notification
   text (session title, working directory, model output preview) — no credentials.
 
 ## Command execution

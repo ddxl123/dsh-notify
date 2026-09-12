@@ -6,7 +6,7 @@
 #        export DSH_SMTP_PASSWORD='your-authorization-code'
 # 3. Merge this section into ~/.dsh/settings.yaml and save; it applies live.
 
-dsh-notify:
+dsh-notify-long:
   email:
     enabled: true
     preset: qq

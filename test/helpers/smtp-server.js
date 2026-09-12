@@ -7,7 +7,7 @@
  * need, so the client's behaviour under real server responses is verified
  * instead of assumed.
  *
- * @module dsh-notify/test/helpers/smtp-server
+ * @module dsh-notify-long/test/helpers/smtp-server
  */
 
 import { createServer } from 'node:net'
@@ -48,7 +48,7 @@ export async function startSmtpServer(options = {}) {
     /** @type {any} */
     let current = {}
     const send = (line) => socket.write(`${line}\r\n`)
-    send('220 dsh-notify.test ESMTP ready')
+    send('220 dsh-notify-long.test ESMTP ready')
 
     socket.on('data', (chunk) => {
       buffer += chunk.toString('utf8')
@@ -74,13 +74,13 @@ export async function startSmtpServer(options = {}) {
         const [verbRaw, ...rest] = line.split(' ')
         const verb = verbRaw.toUpperCase()
         if (verb === 'EHLO') {
-          send('250-dsh-notify.test')
+          send('250-dsh-notify-long.test')
           if (state.auth.length > 0) send(`250-AUTH ${state.auth.join(' ')}`)
           send('250 8BITMIME')
           continue
         }
         if (verb === 'HELO') {
-          send('250 dsh-notify.test')
+          send('250 dsh-notify-long.test')
           continue
         }
         if (verb === 'AUTH') {

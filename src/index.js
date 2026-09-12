@@ -1,5 +1,5 @@
 /**
- * dsh-notify — DeepSeek Harness notification plugin.
+ * dsh-notify-long — DeepSeek Harness notification plugin.
  *
  * A subscribe-side Cordis plugin: it watches the harness for the moments that
  * need a human (a finished task, a failure, a question, an approval) and alerts
@@ -9,7 +9,7 @@
  * Everything decision-shaped lives in `lib/`; this file only reads services,
  * subscribes to events, and registers the model-facing `notify_*` tools.
  *
- * @module dsh-notify
+ * @module dsh-notify-long
  */
 
 import { mkdirSync } from 'node:fs'
@@ -26,7 +26,7 @@ import { describeEmail, emailReady, sendEmail } from '../lib/channels/email.js'
 import { createRuntime } from '../lib/runtime/handlers.js'
 
 /** Cordis plugin name shown in loader diagnostics. */
-export const name = 'dsh-notify'
+export const name = 'dsh-notify-long'
 
 /** Services this plugin consumes; the plugin waits until they all exist. */
 export const inject = ['agents', 'tools']
@@ -184,15 +184,15 @@ export function defaultsFor(value) {
  * Resolve the directory holding this plugin's durable state.
  *
  * @param {any} ctx - the plugin context
- * @returns {string} `<DSH_HOME or ~/.dsh>/dsh-notify`
+ * @returns {string} `<DSH_HOME or ~/.dsh>/dsh-notify-long`
  */
 export function stateDirectory(ctx) {
   if (typeof ctx?.get === 'function') {
     const paths = ctx.get('paths')
-    if (paths !== undefined && typeof paths.home === 'string' && paths.home !== '') return join(paths.home, 'dsh-notify')
+    if (paths !== undefined && typeof paths.home === 'string' && paths.home !== '') return join(paths.home, 'dsh-notify-long')
   }
   const home = sanitizeLine(process.env.DSH_HOME ?? '') || join(sanitizeLine(process.env.HOME ?? '') || '.', '.dsh')
-  return join(home, 'dsh-notify')
+  return join(home, 'dsh-notify-long')
 }
 
 /**
@@ -213,7 +213,7 @@ export function apply(ctx, rawConfig) {
   const engineHolder = { current: undefined }
   if (settings !== undefined) {
     try {
-      settings.installSection(ctx, 'dsh-notify', Config, entry, {
+      settings.installSection(ctx, 'dsh-notify-long', Config, entry, {
         setSource: (current) => { source = current },
         onChange: () => {
           log.debug('notification settings changed')
@@ -552,7 +552,7 @@ function defineTestTool(deps) {
       const requested = args?.channel ?? 'all'
       const results = { sound: 'not requested', desktop: 'not requested', email: 'not requested' }
       const at = Date.now()
-      const title = 'dsh-notify test alert'
+      const title = 'dsh-notify-long test alert'
       const body = `Verification requested at ${new Date(at).toLocaleString()}.`
 
       if (requested === 'all' || requested === 'sound') {
@@ -705,9 +705,9 @@ function createLogger(ctx, config, debug) {
   const emit = (level, message) => {
     if (quiet && level === 'info') return
     try {
-      if (logger !== undefined && typeof logger[level] === 'function') logger[level]('[dsh-notify] %s', message)
-      else if (level === 'warn') console.warn(`[dsh-notify] ${message}`)
-      else console.log(`[dsh-notify] ${message}`)
+      if (logger !== undefined && typeof logger[level] === 'function') logger[level]('[dsh-notify-long] %s', message)
+      else if (level === 'warn') console.warn(`[dsh-notify-long] ${message}`)
+      else console.log(`[dsh-notify-long] ${message}`)
     } catch {
       // Logging must never be the reason an alert fails.
     }

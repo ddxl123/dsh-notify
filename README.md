@@ -1,4 +1,4 @@
-# dsh-notify
+# dsh-notify-long
 
 [简体中文](README.zh.md) | English
 
@@ -37,14 +37,14 @@ approval needed →  🔔 sound + email  "Approval needed: bash"
 Requires Node.js ≥ 20.11 and a working `dsh` (this plugin targets the web profile — the GUI you are probably reading this in).
 
 ```bash
-git clone https://github.com/ddxl123/dsh-notify.git
-cd dsh-notify
+git clone https://github.com/ddxl123/dsh-notify-long.git
+cd dsh-notify-long
 node scripts/install.mjs --profile web
 ```
 
 The installer does two idempotent things:
 
-1. links this repository into `~/.dsh/profiles/web/node_modules/dsh-notify`
+1. links this repository into `~/.dsh/profiles/web/node_modules/dsh-notify-long`
    (the Cordis loader resolves bare package names from the profile directory, so the link must live there);
 2. appends one plugin row to `~/.dsh/profiles/web/cordis.patch.yml`, preserving whatever is already in that file.
 
@@ -65,7 +65,7 @@ Configuration resolves in layers, later wins:
 | Layer | Where | Use it for |
 | --- | --- | --- |
 | Composition row | `config:` inside `~/.dsh/profiles/web/cordis.patch.yml` | Install-time defaults |
-| Settings document (live) | the `dsh-notify:` section of `~/.dsh/settings.yaml` | Day-to-day changes, applied on save |
+| Settings document (live) | the `dsh-notify-long:` section of `~/.dsh/settings.yaml` | Day-to-day changes, applied on save |
 | Environment | `DSH_SMTP_PASSWORD`, … | Secrets only |
 
 ### 1. Email (use a provider preset)
@@ -73,7 +73,7 @@ Configuration resolves in layers, later wins:
 Add this to `~/.dsh/settings.yaml`:
 
 ```yaml
-dsh-notify:
+dsh-notify-long:
   email:
     preset: gmail              # fills in host / port / transport, see the list below
     user: you@gmail.com        # login account
@@ -124,7 +124,7 @@ Ask the agent:
 ### 4. Quiet hours and per-event switches
 
 ```yaml
-dsh-notify:
+dsh-notify-long:
   quietHours:
     start: '23:00'
     end: '07:00'      # inside the window: no sound, no banner, email still sent
@@ -173,14 +173,14 @@ Decision details:
 | `notify_status` | Report active channels, redacted email readiness, quiet hours, queue depth, and this run's success/failure counts. |
 | `notify_flush` | Retry everything waiting in the outbox (for example after fixing a password). |
 
-State lives in `~/.dsh/dsh-notify/outbox.json` — atomic writes, removed on success, at most 5 attempts, abandoned after 6 hours.
+State lives in `~/.dsh/dsh-notify-long/outbox.json` — atomic writes, removed on success, at most 5 attempts, abandoned after 6 hours.
 
 ## Full configuration reference
 
 Every field is optional; defaults are in parentheses.
 
 ```yaml
-dsh-notify:
+dsh-notify-long:
   enabled: true                # master switch
 
   sound:
@@ -229,7 +229,7 @@ dsh-notify:
     kinds: {}                  # { <kind>: { enabled, channels } }
 
   outbox:
-    path:                      # default ~/.dsh/dsh-notify/outbox.json
+    path:                      # default ~/.dsh/dsh-notify-long/outbox.json
     flushOnStart: true         # deliver anything left over at boot
 
   tools:
@@ -256,7 +256,7 @@ dsh-notify:
 ## Development
 
 ```bash
-node --test test/          # 75 tests: policy, rendering, SMTP (local fake server), queue, engine, boot-level mount
+node --test test/          # 82 tests: policy, rendering, SMTP (local fake server), queue, engine, profile-patch editing, boot-level mount
 node scripts/test-alert.mjs --channel all --json
 ```
 
@@ -264,7 +264,7 @@ Layout:
 
 ```
 src/index.js              Cordis plugin entry: read services, subscribe, register tools (thin wiring)
-lib/core/                 Harness-free decisions: policy, text, event folding, queue, engine
+lib/core/                 Harness-free decisions: policy, text, event folding, queue, engine, profile-patch editing
 lib/channels/             The three delivery channels: sound, desktop, email
 lib/email/                Hand-written SMTP client plus RFC 5322 / MIME construction
 lib/runtime/handlers.js   Harness events → alert decisions (pure, unit-tested)

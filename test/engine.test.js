@@ -17,7 +17,7 @@ import { createRuntime } from '../lib/runtime/handlers.js'
 
 /** @returns {string} a fresh temporary directory */
 function tempDir() {
-  return mkdtempSync(join(tmpdir(), 'dsh-notify-test-'))
+  return mkdtempSync(join(tmpdir(), 'dsh-notify-long-test-'))
 }
 
 /** @returns {any} a channel recorder */

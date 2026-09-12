@@ -10,7 +10,7 @@
  *
  * Usage: node scripts/test-setup.mjs [--dsh-node-modules <path>]
  *
- * @module dsh-notify/scripts/test-setup
+ * @module dsh-notify-long/scripts/test-setup
  */
 
 import { existsSync, mkdirSync, rmSync, symlinkSync } from 'node:fs'
@@ -55,7 +55,7 @@ function hasHarness(anchor) {
 
 const anchor = candidates().find(hasHarness)
 if (anchor === undefined) {
-  console.error('dsh-notify: could not find a dsh installation to link. Pass --dsh-node-modules <path to a node_modules directory that contains @deepseek-ai>.')
+  console.error('dsh-notify-long: could not find a dsh installation to link. Pass --dsh-node-modules <path to a node_modules directory that contains @deepseek-ai>.')
   process.exit(1)
 }
 

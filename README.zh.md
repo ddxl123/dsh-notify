@@ -1,4 +1,4 @@
-# dsh-notify
+# dsh-notify-long
 
 简体中文 | [English](README.md)
 
@@ -41,14 +41,14 @@
 前提：Node.js ≥ 20.11，已经能运行 `dsh`（本插件用的是 web profile，也就是你现在的界面）。
 
 ```bash
-git clone https://github.com/ddxl123/dsh-notify.git
-cd dsh-notify
+git clone https://github.com/ddxl123/dsh-notify-long.git
+cd dsh-notify-long
 node scripts/install.mjs --profile web
 ```
 
 脚本只做两件幂等的事：
 
-1. 把本仓库软链到 `~/.dsh/profiles/web/node_modules/dsh-notify`
+1. 把本仓库软链到 `~/.dsh/profiles/web/node_modules/dsh-notify-long`
    （Cordis loader 用 profile 目录作为裸包名的解析锚点，所以必须链到这里）；
 2. 在 `~/.dsh/profiles/web/cordis.patch.yml` 追加一行插件条目（保留文件里已有的内容）。
 
@@ -69,7 +69,7 @@ dsh --profile web
 | 层 | 位置 | 用途 |
 | --- | --- | --- |
 | 组合条目 | `~/.dsh/profiles/web/cordis.patch.yml` 里的 `config:` | 装机时的默认值 |
-| 设置文档（热更新） | `~/.dsh/settings.yaml` 的 `dsh-notify:` 段 | 日常调整，保存即生效 |
+| 设置文档（热更新） | `~/.dsh/settings.yaml` 的 `dsh-notify-long:` 段 | 日常调整，保存即生效 |
 | 环境变量 | `DSH_SMTP_PASSWORD` 等 | 只放密钥 |
 
 ### 1. 邮件（推荐用 provider 预设）
@@ -77,7 +77,7 @@ dsh --profile web
 在 `~/.dsh/settings.yaml` 里加一段：
 
 ```yaml
-dsh-notify:
+dsh-notify-long:
   email:
     preset: qq                 # 见下表，会自动填 host / port / 传输方式
     user: you@qq.com           # 登录账号
@@ -128,7 +128,7 @@ node scripts/test-alert.mjs --channel sound --kind error   # 试听错误提示�
 ### 4. 免打扰与事件开关
 
 ```yaml
-dsh-notify:
+dsh-notify-long:
   quietHours:
     start: '23:00'
     end: '07:00'      # 免打扰期间：不出声、不弹横幅，但邮件照发
@@ -177,7 +177,7 @@ dsh-notify:
 | `notify_status` | 报告通道启用状态、邮件是否可用（脱敏）、免打扰、队列长度、本次运行成功/失败数。 |
 | `notify_flush` | 立刻重试队列里所有待发提醒（例如刚把邮件密码改对）。 |
 
-工作目录：`~/.dsh/dsh-notify/`
+工作目录：`~/.dsh/dsh-notify-long/`
 
 - `outbox.json` — 待发提醒队列（原子写入；成功即删除，最多重试 5 次，超过 6 小时未送出则丢弃）；
 - 想看状态直接问 agent 要 `notify_status`。
@@ -187,7 +187,7 @@ dsh-notify:
 所有字段都可以省略（括号内为默认值）。
 
 ```yaml
-dsh-notify:
+dsh-notify-long:
   enabled: true                # 总开关
 
   sound:
@@ -236,7 +236,7 @@ dsh-notify:
     kinds: {}                  # { completed|question|approval|error|subagent|manual|test: { enabled, channels } }
 
   outbox:
-    path:                      # 默认 ~/.dsh/dsh-notify/outbox.json
+    path:                      # 默认 ~/.dsh/dsh-notify-long/outbox.json
     flushOnStart: true         # 启动时补发积压提醒
 
   tools:
@@ -268,7 +268,7 @@ dsh-notify:
 ## 开发
 
 ```bash
-node --test test/          # 75 个测试：策略、渲染、SMTP（本地假服务器）、队列、引擎、boot 级挂载
+node --test test/          # 82 个测试：策略、渲染、SMTP（本地假服务器）、队列、引擎、profile 补丁编辑、boot 级挂载
 node scripts/test-alert.mjs --channel all --json
 ```
 
@@ -276,7 +276,7 @@ node scripts/test-alert.mjs --channel all --json
 
 ```
 src/index.js              Cordis 插件入口：读服务、订阅事件、注册工具（薄接线层）
-lib/core/                 与 harness 无关的决策层：策略、文本、事件折叠、队列、引擎
+lib/core/                 与 harness 无关的决策层：策略、文本、事件折叠、队列、引擎、profile 补丁编辑
 lib/channels/             三个投递通道：系统提示音、桌面横幅、邮件
 lib/email/                自研 SMTP 客户端 + RFC 5322/MIME 构造
 lib/runtime/handlers.js   harness 事件 → 提醒决策（纯函数，便于测试）

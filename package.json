@@ -1,5 +1,5 @@
 {
-  "name": "dsh-notify",
+  "name": "dsh-notify-long",
   "version": "0.1.0",
   "description": "DeepSeek Harness plugin: system-sound, desktop and email alerts when an agent finishes a task, errors, or needs your input",
   "keywords": [
@@ -17,11 +17,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ddxl123/dsh-notify.git"
+    "url": "git+https://github.com/ddxl123/dsh-notify-long.git"
   },
-  "homepage": "https://github.com/ddxl123/dsh-notify#readme",
+  "homepage": "https://github.com/ddxl123/dsh-notify-long#readme",
   "bugs": {
-    "url": "https://github.com/ddxl123/dsh-notify/issues"
+    "url": "https://github.com/ddxl123/dsh-notify-long/issues"
   },
   "author": "long0521",
   "type": "module",
